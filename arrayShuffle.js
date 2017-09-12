@@ -6,6 +6,14 @@ function shuffleArray (array){
     }
 }
 
+function shuffleArray2 (array){
+    // shuffles the array in place
+    for (var j = 0; j < array.length; j++) {
+        var rand = j + Math.floor(Math.random() * (array.length-j));
+        [array[j], array[rand]]=[array[rand], array[j]]
+    }
+}
+
 function getShuffledArray (array){
     var shuffledArr=[]
     while (array.length){

@@ -15,6 +15,16 @@ function getShuffledArray (arr){
     return newArr
 }
 
+function getShuffledArray2 (arr){
+    let newArr = arr.slice()
+    for (let i = 0; i < newArr.length ; i++) {
+        let rand = (i + ( Math.floor( Math.random() * (newArr.length - i) ) ))
+        // console.log( `i is ${i}, rand is ${rand}, newArr is ${newArr}`)
+        [newArr[i], newArr[rand]]=[newArr[rand], newArr[i]]
+    }
+    return newArr
+}
+
 function testShuffledArrayFun(getShuffledArrayFun){
     let arr = [0,1,2,3,4]
     var length = arr.length
@@ -28,7 +38,7 @@ function testShuffledArrayFun(getShuffledArrayFun){
         countArr.push(positionArr)
     }
 
-    const n = 5000
+    const n = 30
     for (var i=0 ; i<n ; i++){
         // We'll call getShuffledArrayFun for n times. And for each time we'll increment the counter.  At the end we'll print the results so we can verify that the function actually randomises the array.
         var shuffledArr = getShuffledArrayFun(arr)
@@ -50,5 +60,5 @@ function testShuffledArrayFun(getShuffledArrayFun){
     )
 }
 
-testShuffledArrayFun(getShuffledArray)
+testShuffledArrayFun(getShuffledArray2)
 // console.log(getShuffledArray1(['a','b','c','d']))
