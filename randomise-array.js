@@ -10,7 +10,7 @@ function getShuffledArray (arr){
     let newArr = arr.slice()
     for (var i = newArr.length - 1; i > 0; i--) {
         var rand = Math.floor(Math.random() * (i + 1));
-        [newArr[i], newArr[rand]]=[newArr[rand], newArr[i]]
+        [newArr[i], newArr[rand]]=[newArr[rand], newArr[i]];
     }
     return newArr
 }
@@ -18,11 +18,33 @@ function getShuffledArray (arr){
 function getShuffledArray2 (arr){
     let newArr = arr.slice()
     for (let i = 0; i < newArr.length ; i++) {
-        let rand = (i + ( Math.floor( Math.random() * (newArr.length - i) ) ))
-        // console.log( `i is ${i}, rand is ${rand}, newArr is ${newArr}`)
-        [newArr[i], newArr[rand]]=[newArr[rand], newArr[i]]
+        var rand = (i + ( Math.floor( Math.random() * (newArr.length - i) ) ));
+        [newArr[i], newArr[rand]]=[newArr[rand], newArr[i]];
     }
     return newArr
+}
+
+// function getShuffledArray3(arr) {
+//     let array = arr.slice()
+//     for (var i = array.length - 1; i > 0; i--) {
+//         var j = Math.floor(Math.random() * (i + 1));
+//         [array[i], array[j]]=[array[j],array[i]]
+//     }
+//     return array;
+// }
+
+function getShuffledArray4(list){
+	// const newArray = [];
+    console.log('4 started')
+	for ( let i = 0; i < list.length; i++ ) {
+		// console.log( newArray.push(list[i]) );
+		var rand = Math.floor( Math.random() * (i + 1) ); // explain
+        // console.log("i is ", i, " rand is ", rand);
+        // console.log(list)
+		[ list[i], list[rand] ] = [ list[rand], list[i] ]; // explain
+	}
+	return list;
+	// shouldn't this function return something?
 }
 
 function testShuffledArrayFun(getShuffledArrayFun){
@@ -38,7 +60,7 @@ function testShuffledArrayFun(getShuffledArrayFun){
         countArr.push(positionArr)
     }
 
-    const n = 30
+    const n = 100
     for (var i=0 ; i<n ; i++){
         // We'll call getShuffledArrayFun for n times. And for each time we'll increment the counter.  At the end we'll print the results so we can verify that the function actually randomises the array.
         var shuffledArr = getShuffledArrayFun(arr)
@@ -60,5 +82,6 @@ function testShuffledArrayFun(getShuffledArrayFun){
     )
 }
 
-testShuffledArrayFun(getShuffledArray2)
+
+testShuffledArrayFun(getShuffledArray4)
 // console.log(getShuffledArray1(['a','b','c','d']))
