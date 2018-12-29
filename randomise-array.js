@@ -15,6 +15,16 @@ function getShuffledArray (arr){
     return newArr
 }
 
+function getShuffledArray15 (arr){
+    let newArr = [...arr]
+    for (var i = newArr.length - 1; i > 0; i--) {
+        var rand = Math.floor(Math.random() * (i + 1));
+        [newArr[i], newArr[rand]]=[newArr[rand], newArr[i]];
+    }
+    return newArr
+}
+
+
 function getShuffledArray2 (arr){
     let newArr = arr.slice()
     for (let i = 0; i < newArr.length ; i++) {
@@ -49,39 +59,60 @@ function getShuffledArray4(list){
 
 function testShuffledArrayFun(getShuffledArrayFun){
     let arr = [0,1,2,3,4]
-    var length = arr.length
 
-    var countArr = [] // for for each possible position in the shuffledArr, for each possible value, we'll create a counter. the counter of element 0 in position 0 will be countArr[0][0]
-    for (var i=0 ; i<length ; i++){
-        let positionArr= []
-        for (var j=0 ; j<length ; j++){
-            positionArr.push(0) // Set Counter To 0
-        }
-        countArr.push(positionArr)
-    }
-
-    const n = 100
+    var countArr = arr.map(el=>{
+        return arr.map(
+            el=> 0
+        )
+    }) // for for each possible position in the shuffledArr, for each possible value, we'll create a counter. the counter of element 0 in position 0 will be countArr[0][0]
+    const t0 = performance.now()
+    const n = 1000
     for (var i=0 ; i<n ; i++){
-        // We'll call getShuffledArrayFun for n times. And for each time we'll increment the counter.  At the end we'll print the results so we can verify that the function actually randomises the array.
+        // We'll call getShuffledArrayFun for n times. And for each time we'll increment the counter. 
         var shuffledArr = getShuffledArrayFun(arr)
         shuffledArr.forEach(
             (value,key)=>{countArr[key][value]++}
         )
     }
-    console.log(`CountARR is [ ${countArr} ]`)
+    const t1 = performance.now()
+    console.log(`Count Values in position`)
+    console.table(countArr)
 
-    countArr.forEach(
-        (positionArr,key)=>{
-            console.log(`Position ${key}:`)
-            positionArr.forEach(
-                (count,originalValue)=>{
-                    console.log(`The Value ${originalValue} appeared ${count*100/n}% `)
-                }
-            )
-        }
-    )
+    const frequencyArr = countArr.map( positionArr => (
+        positionArr.map(  
+            count => count/n
+        )
+    )) 
+
+    console.log("Frequency of value in position")
+    console.table(frequencyArr)
+    console.log(`total time: ${t1-t0}`)
 }
 
 
-testShuffledArrayFun(getShuffledArray4)
-// console.log(getShuffledArray1(['a','b','c','d']))
+
+const getShuffledArr = arr => {
+    if (arr.length === 1) {return arr};
+    const rand = Math.floor(Math.random() * arr.length);
+    return [arr[rand], ...getShuffledArr(arr.filter((_, i) => i != rand))];
+};
+
+function iFilter (_, i){
+    console.log(this)
+    return (i != this)
+}
+
+const getShuffledArr2 = arr => {
+    if (arr.length === 1) {return arr};
+    const rand = Math.floor(Math.random() * arr.length);
+    return [arr[rand], ...getShuffledArr2(arr.filter(iFilter, rand))];
+};
+
+
+testShuffledArrayFun(getShuffledArr)
+
+testShuffledArrayFun(getShuffledArray)
+
+testShuffledArrayFun(getShuffledArr2)
+
+
